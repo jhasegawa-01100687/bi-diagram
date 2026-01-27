@@ -40,9 +40,9 @@ flowchart BT
         subgraph core-system-bi["core-system-bi"]
             direction TB
             subgraph Stream1["1系統目（優先構築）"]
-                S1_Cold["Cold層<br/>（Raw Ingest）"]
-                S1_Warm["Warm層<br/>（業務定義確定）<br/>売上･原価･粗利･返品等 = SSOT"]
-                S1_Hot["Hot層<br/>（表示最適化）<br/>日次/週次/期間軸<br/>YoY/MoM/WoW ワイドテーブル"]
+                S1_Cold["Cold層"]
+                S1_Warm["Warm層"]
+                S1_Hot["Hot層"]
                 S1_Cold --> S1_Warm --> S1_Hot
             end
             subgraph Stream2["2系統目（後続・リプレイス）"]
@@ -68,10 +68,9 @@ flowchart BT
     POSITIVE -->|Datastream| DH_Cold
     DH_Warm --> PUB_Hot
     DH_Warm --> SEC_Hot
-    Mart -->|Datastream| S1_Cold
-    DMT -->|Datastream| S1_Cold
-    Unikage -.->|段階的に廃止| S1_Cold
-    Core -.->|将来：分岐取得| S2_Cold
+    Mart -->|Datastream<br/>段階的に廃止| S1_Cold
+    DMT -->|Datastream<br/>段階的に廃止| S1_Cold
+    Core -.->|将来の正規ルート| S2_Cold
     WOS --> Unikage
     Unikage --> WG_Cold
 ```
