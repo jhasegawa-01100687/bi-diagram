@@ -68,5 +68,6 @@ flowchart BT
     Mart -->|Datastream| S1_Hot
     DMT -->|Datastream| S1_Hot
     Core -.->|将来：分岐取得| S2_Cold
-    WOS -->|Datastream| WG_Cold
+    WOS --> Unikage
+    Unikage --> WG_Cold
 ```
