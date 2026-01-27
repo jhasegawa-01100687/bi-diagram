@@ -6,11 +6,11 @@ flowchart BT
         direction LR
         Core["基幹システム等<br/>業務データ発生元"]
         POSITIVE["POSITIVE<br/>人事系データ発生元"]
-        Unikage["ユニケージ<br/>業務データ配信"]
+        Unikage["ユニケージ（旧）<br/>業務データ配信"]
         Mart["マート<br/>Access ODBC接続用"]
         DMT["DMT<br/>Cognos用"]
         WOS["WOS<br/>ECデータ発生元"]
-        
+
         Core --> Unikage
         Unikage --> Mart
         Unikage --> DMT
@@ -18,7 +18,7 @@ flowchart BT
 
     subgraph GCP["Google Cloud"]
         direction TB
-        
+
         subgraph hc-data-hub["hc-data-hub"]
             DH_Cold["Cold層"]
             DH_Warm["Warm層"]
@@ -40,12 +40,15 @@ flowchart BT
         subgraph core-system-bi["core-system-bi"]
             direction TB
             subgraph Stream1["1系統目（優先構築）"]
-                S1_Hot["Hot層のみ"]
+                S1_Cold["Cold層<br/>（Raw Ingest）"]
+                S1_Warm["Warm層<br/>（業務定義確定）<br/>売上･原価･粗利･返品等 = SSOT"]
+                S1_Hot["Hot層<br/>（表示最適化）<br/>日次/週次/期間軸<br/>YoY/MoM/WoW ワイドテーブル"]
+                S1_Cold --> S1_Warm --> S1_Hot
             end
             subgraph Stream2["2系統目（後続・リプレイス）"]
-                S2_Cold["Cold層"]
-                S2_Warm["Warm層"]
-                S2_Hot["Hot層"]
+                S2_Cold["Cold層<br/>（Raw Ingest）"]
+                S2_Warm["Warm層<br/>（業務定義確定）<br/>売上･原価･粗利･返品等 = SSOT"]
+                S2_Hot["Hot層<br/>（表示最適化）<br/>日次/週次/期間軸<br/>YoY/MoM/WoW ワイドテーブル"]
                 S2_Cold --> S2_Warm --> S2_Hot
             end
             CORE_Out["アクション提案AI<br/>Looker Studio 一般向け"]
@@ -65,45 +68,10 @@ flowchart BT
     POSITIVE -->|Datastream| DH_Cold
     DH_Warm --> PUB_Hot
     DH_Warm --> SEC_Hot
-    Mart -->|Datastream| S1_Hot
-    DMT -->|Datastream| S1_Hot
+    Mart -->|Datastream| S1_Cold
+    DMT -->|Datastream| S1_Cold
+    Unikage -.->|段階的に廃止| S1_Cold
     Core -.->|将来：分岐取得| S2_Cold
     WOS --> Unikage
     Unikage --> WG_Cold
-```
-
-↓中村さんが書いてくださったフローチャート
-```
-flowchart BT
-
-  %% ===== 左側：AWS =====
-  subgraph AWS["AWS / As-Is"]
-    direction TB
-    Core["基幹システム等（生データ）"]
-    Unikage["ユニケージ（旧）"]
-    Core --> Unikage
-  end
-
-
-  %% ===== 中央：GCP Phase2 =====
-  subgraph GCP["Google Cloud / Phase2 (本命リプレイス)"]
-    direction LR
-
-    subgraph core-system-bi["core-system-bi"]
-      direction LR
-      P2_Cold["Cold（Raw Ingest）"]
-      P2_Warm["Warm（業務定義確定）<br/>売上・原価・粗利・返品等<br/>= SSOT"]
-      P2_Gold["Hot（表示最適化）<br/>日次/週次/期間軸<br/>YoY/MoM/WoW<br/>ワイドテーブル"]
-      P2_Out["Looker Studio / API（一般向け）"]
-
-      P2_Cold --> P2_Warm
-      P2_Warm --> P2_Gold
-      P2_Gold --> P2_Out
-    end
-  end
-
-
-  %% ===== AWS → GCP フロー =====
-  Core -->|CDC / Extract| P2_Cold
-  Unikage -.->|"段階的に停止"| P2_Cold
 ```
