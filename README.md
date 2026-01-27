@@ -11,6 +11,7 @@ flowchart BT
         Mart["マート<br/>Access ODBC接続用"]
         DMT["DMT<br/>Cognos用"]
 
+        WOS --> Unikage
         Core --> Unikage
         Unikage --> Mart
         Unikage --> DMT
@@ -65,7 +66,6 @@ flowchart BT
     end
 
     %% データフロー（AWS → GCP）
-    WOS --> Unikage
     Unikage --> WG_Cold
     DH_Warm --> PUB_Hot
     DH_Warm --> SEC_Hot
