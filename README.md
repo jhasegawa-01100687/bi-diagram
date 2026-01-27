@@ -4,12 +4,12 @@
 flowchart BT
     subgraph AWS["AWS"]
         direction LR
+        WOS["WOS<br/>ECデータ発生元"]
         Core["基幹システム等<br/>業務データ発生元"]
         POSITIVE["POSITIVE<br/>人事系データ発生元"]
         Unikage["ユニケージ（旧）<br/>業務データ配信"]
         Mart["マート<br/>Access ODBC接続用"]
         DMT["DMT<br/>Cognos用"]
-        WOS["WOS<br/>ECデータ発生元"]
 
         Core --> Unikage
         Unikage --> Mart
