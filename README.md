@@ -65,12 +65,12 @@ flowchart BT
     end
 
     %% データフロー（AWS → GCP）
-    POSITIVE -->|Datastream| DH_Cold
+    WOS --> Unikage
+    Unikage --> WG_Cold
     DH_Warm --> PUB_Hot
     DH_Warm --> SEC_Hot
     Mart -->|Datastream<br/>段階的に廃止| S1_Cold
     DMT -->|Datastream<br/>段階的に廃止| S1_Cold
     Core -.->|将来の正規ルート| S2_Cold
-    WOS --> Unikage
-    Unikage --> WG_Cold
+    POSITIVE -->|Datastream| DH_Cold
 ```
