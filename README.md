@@ -68,7 +68,8 @@ flowchart BT
             WG_Cold["Cold層"]
             WG_Warm["Warm層"]
             WG_Hot["Hot層"]
-            WG_Cold --> WG_Warm --> WG_Hot
+            WG_Out["Looker Studio"]
+            WG_Cold --> WG_Warm --> WG_Hot --> WG_Out
         end
     end
 
