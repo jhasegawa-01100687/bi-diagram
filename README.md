@@ -57,6 +57,13 @@ flowchart BT
             S2_Hot -.-> CORE_Out
         end
 
+        subgraph fcl-xxx["fcl-xxx"]
+            FCL_Warm["Warm層"]
+            FCL_Hot["Hot層"]
+            FCL_Out["Looker Studio"]
+            FCL_Warm --> FCL_Hot --> FCL_Out
+        end
+
         subgraph world-group["world-group-230204（既存・要棚卸）"]
             WG_Cold["Cold層"]
             WG_Warm["Warm層"]
@@ -67,6 +74,7 @@ flowchart BT
 
     %% データフロー（AWS → GCP）
     Unikage --> WG_Cold
+    S2_Cold --> FCL_Warm
     DH_Warm --> PUB_Hot
     DH_Warm --> SEC_Hot
     Mart -->|Datastream<br/>段階的に廃止| S1_Cold
