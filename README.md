@@ -57,18 +57,18 @@ flowchart BT
             S2_Hot -.-> CORE_Out
         end
 
-        subgraph world-group["world-group-230204（既存・要棚卸）"]
-            WG_Cold["Cold層"]
-            WG_Warm["Warm層"]
-            WG_Hot["Hot層"]
-            WG_Cold --> WG_Warm --> WG_Hot
-        end
-
         subgraph fcl-xxx["fcl-xxx"]
             FCL_Warm["Warm層"]
             FCL_Hot["Hot層"]
             FCL_Out["Looker Studio"]
             FCL_Warm --> FCL_Hot --> FCL_Out
+        end
+
+        subgraph world-group["world-group-230204（既存・要棚卸）"]
+            WG_Cold["Cold層"]
+            WG_Warm["Warm層"]
+            WG_Hot["Hot層"]
+            WG_Cold --> WG_Warm --> WG_Hot
         end
     end
 
