@@ -20,32 +20,32 @@ flowchart BT
     subgraph GCP["Google Cloud"]
         direction TB
 
-        subgraph hc-data-hub["hc-data-hub"]
+        subgraph pj-hc-data-hub["pj-hc-data-hub"]
             DH_Cold["Cold層"]
             DH_Warm["Warm層"]
             DH_Cold --> DH_Warm
         end
 
-        subgraph hc-bi-public["hc-bi-public"]
+        subgraph pj-hc-bi-public["pj-hc-bi-public"]
             PUB_Hot["Hot層"]
             PUB_Out["API / Looker Studio<br/>一般ユーザー向け"]
             PUB_Hot --> PUB_Out
         end
 
-        subgraph hc-bi-secure["hc-bi-secure"]
+        subgraph pj-hc-bi-secure["pj-hc-bi-secure"]
             SEC_Hot["Hot層"]
             SEC_Out["Looker Studio<br/>人事ユーザー向け"]
             SEC_Hot --> SEC_Out
         end
 
-        subgraph fcl-xxx["fcl-xxx"]
+        subgraph pj-fcl-xxx["pj-fcl-xxx"]
             FCL_Warm["Warm層"]
             FCL_Hot["Hot層"]
             FCL_Out["Looker Studio"]
             FCL_Warm --> FCL_Hot --> FCL_Out
         end
 
-        subgraph core-system-bi["core-system-bi"]
+        subgraph pj-core-system-bi["pj-core-system-bi"]
             direction TB
             subgraph Stream2["2系統目（後続で構築）"]
                 S2_Cold["Cold層<br/>（Raw Ingest）"]
