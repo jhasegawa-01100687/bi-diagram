@@ -32,7 +32,7 @@ flowchart BT
             PUB_Hot --> PUB_Out
         end
 
-        subgraph pj-hc-bi-secure["pj-hc-bi-secure"]
+        subgraph pj-hc-bi-private["pj-hc-bi-private"]
             SEC_Hot["Hot層"]
             SEC_Out["Looker Studio<br/>人事ユーザー向け"]
             SEC_Hot --> SEC_Out
